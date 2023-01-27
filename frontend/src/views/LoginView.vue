@@ -9,11 +9,13 @@
       <form @submit.prevent="handleLogin" class="space-y-4">
         <div class="space-y-1">
           <input
+            v-model="email"
             type="email"
             class="p-2 w-full border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:border-blue-500 sm:text-sm"
             placeholder="Email"
           />
           <input
+            v-model="password"
             type="password"
             class="p-2 w-full border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:border-blue-500 sm:text-sm"
             placeholder="Senha"
@@ -46,10 +48,27 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
   methods: {
     handleLogin() {
-      this.$router.push("/dashboard");
+      axios
+        .post(`${process.env.VUE_APP_API}/students/login`, {
+          email: this.email,
+          password: this.password,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            localStorage.setItem("token", response.data.token);
+            this.$router.push("/dashboard");
+          }
+        });
     },
   },
 };
