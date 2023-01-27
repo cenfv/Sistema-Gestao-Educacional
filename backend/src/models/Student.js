@@ -9,10 +9,6 @@ const studentSchema = new mongoose.Schema({
     type: String,
     required: [true, "enrollmentNumber is required"],
   },
-  dateOfBirth: {
-    type: Date,
-    required: [true, "dateOfBirth is required"],
-  },
   subjects: [
     {
       type: mongoose.Schema.Types.ObjectId,
