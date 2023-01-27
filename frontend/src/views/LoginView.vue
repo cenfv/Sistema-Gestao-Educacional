@@ -6,7 +6,7 @@
       <h2 class="text-center text-2xl font-bold text-gray-900">
         Entrar com sua conta
       </h2>
-      <form class="space-y-4">
+      <form @submit.prevent="handleLogin" class="space-y-4">
         <div class="space-y-1">
           <input
             type="email"
@@ -25,7 +25,7 @@
               type="checkbox"
               class="h-4 w-4 text-blue-600 border-gray-300 rounded"
             />
-            <label class="ml-2 block text-sm text-gray-900"> Lembrar-me </label>
+            <label class="ml-2 text-sm text-gray-900"> Lembrar-me </label>
           </div>
           <div class="text-sm">
             <router-link
@@ -45,3 +45,12 @@
     </div>
   </div>
 </template>
+<script>
+export default {
+  methods: {
+    handleLogin() {
+      this.$router.push("/dashboard");
+    },
+  },
+};
+</script>

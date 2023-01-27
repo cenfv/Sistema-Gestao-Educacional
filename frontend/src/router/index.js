@@ -4,6 +4,9 @@ import HomeNavBar from "@/components/HomeNavBar.vue";
 import AboutView from "@/views/AboutView.vue";
 import ContactView from "@/views/ContactView.vue";
 import NewsView from "@/views/NewsView.vue";
+import LoginView from "@/views/LoginView.vue";
+import DashboardView from "@/views/DashboardView.vue";
+
 
 const routes = [
   {
@@ -41,7 +44,12 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    component: () => import("@/views/LoginView.vue"),
+    component: LoginView,
+  },
+  {
+    path: "/dashboard",
+    name: "dashboard",
+    component: DashboardView
   },
 ];
 
