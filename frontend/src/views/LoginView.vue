@@ -66,6 +66,11 @@ export default {
         .then((response) => {
           if (response.status === 200) {
             localStorage.setItem("token", response.data.token);
+            this.$store.dispatch("setUser", {
+              id: response.data.user._id,
+              name: response.data.user.name,
+              email: response.data.user.email,
+            });
             this.$router.push("/dashboard");
           }
         });
