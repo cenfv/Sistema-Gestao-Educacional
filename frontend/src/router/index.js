@@ -1,12 +1,13 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
 import HomeNavBar from "@/components/HomeNavBar.vue";
+import DashboardNavBar from "@/components/DashboardNavBar.vue";
 import AboutView from "@/views/AboutView.vue";
 import ContactView from "@/views/ContactView.vue";
 import NewsView from "@/views/NewsView.vue";
 import LoginView from "@/views/LoginView.vue";
 import DashboardView from "@/views/DashboardView.vue";
-
+import QuestionView from "@/views/QuestionView.vue";
 
 const routes = [
   {
@@ -49,7 +50,18 @@ const routes = [
   {
     path: "/dashboard",
     name: "dashboard",
-    component: DashboardView
+    components: {
+      default:DashboardView,
+      navbar: DashboardNavBar,
+    }
+  },
+  {
+    path: "/question",
+    name: "question",
+    components: {
+      default:QuestionView,
+      navbar: DashboardNavBar,
+    }
   },
 ];
 
