@@ -124,7 +124,8 @@ router.post("/login", async function (req, res, next) {
   if (!response) {
     return res.status(403).send("Invalid credentials!");
   }
-  return res.send({ token: response });
+
+  return res.send(response);
 });
 
 router.post(

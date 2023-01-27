@@ -59,7 +59,14 @@ exports.getStudentById = async (id) => {
   }
 };
 
-exports.updateStudent = async (id, name, enrollmentNumber,subjects, email, password,) => {
+exports.updateStudent = async (
+  id,
+  name,
+  enrollmentNumber,
+  subjects,
+  email,
+  password
+) => {
   try {
     let passwordHash = "";
     if (password && password.length >= 6) {
@@ -71,7 +78,7 @@ exports.updateStudent = async (id, name, enrollmentNumber,subjects, email, passw
       const res = await student.updateOne({
         name,
         enrollmentNumber,
-        subjects
+        subjects,
       });
       return res;
     } else {
@@ -80,7 +87,6 @@ exports.updateStudent = async (id, name, enrollmentNumber,subjects, email, passw
         enrollmentNumber,
         subjects,
         password: passwordHash,
-       
       });
       return res;
     }
@@ -102,20 +108,31 @@ exports.deleteStudent = async (id) => {
 };
 
 exports.login = async function (email, password) {
-    try {
-        const student = await Student.findOne({ email: email});
-        if (!student) {
-            return "Student not found";
-        }
-        const checkPassword = await bcrypt.compare(password, student.password);
-        if (checkPassword) {
-            const token = jwt.sign({ id: student._id, name: student.name, enrollmentNumber: student.enrollmentNumber , email: student.email }, process.env.SECRET, {
-                expiresIn: 86400,
-            });
-            return token;
-        }
-        
-    } catch (err) {
-        console.log(err);
+  try {
+    const student = await Student.findOne({ email: email });
+    if (!student) {
+      return "Student not found";
     }
-}
+    const checkPassword = await bcrypt.compare(password, student.password);
+    if (checkPassword) {
+      const token = jwt.sign(
+        {
+          id: student._id,
+          name: student.name,
+          enrollmentNumber: student.enrollmentNumber,
+          email: student.email,
+        },
+        process.env.SECRET,
+        {
+          expiresIn: 86400,
+        }
+      );
+      return {
+        user: student,
+        token: token,
+      };
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
