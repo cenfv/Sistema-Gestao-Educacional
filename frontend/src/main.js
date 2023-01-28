@@ -1,19 +1,15 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import '@/assets/css/tailwind.css'
 import router from './router'
 import store from './store'
+import vuetify from './plugins/vuetify'
+import { loadFonts } from './plugins/webfontloader'
+import '@/assets/css/tailwind.css'
 
-/* import the fontawesome core */
-import { library } from '@fortawesome/fontawesome-svg-core'
-
-/* import font awesome icon component */
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
-/* import specific icons */
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
-library.add(faTrash)
+loadFonts()
 
 createApp(App)
-.component('font-awesome-icon', FontAwesomeIcon)
-.use(store).use(router).mount('#app')
+  .use(router)
+  .use(store)
+  .use(vuetify)
+  .mount('#app')

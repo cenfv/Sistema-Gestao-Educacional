@@ -9,6 +9,7 @@ import LoginView from "@/views/LoginView.vue";
 import DashboardView from "@/views/DashboardView.vue";
 import QuestionView from "@/views/QuestionView.vue";
 import SubjectView from "@/views/SubjectView.vue";
+import TestView from "@/views/TestView.vue";
 
 const routes = [
   {
@@ -69,6 +70,14 @@ const routes = [
     name: "subject",
     components: {
       default:SubjectView,
+      navbar: DashboardNavBar,
+    }
+  },
+  {
+    path: "/test",
+    name: "test",
+    components: {
+      default:TestView,
       navbar: DashboardNavBar,
     }
   }
