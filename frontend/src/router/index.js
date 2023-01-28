@@ -130,6 +130,7 @@ const routes = [
   {
     path: "/student/:id",
     name: "student-update",
+    props: true,
     components: {
       default:StudentRegisterView,
       navbar: DashboardNavBar,

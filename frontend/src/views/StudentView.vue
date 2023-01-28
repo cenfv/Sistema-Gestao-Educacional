@@ -19,38 +19,47 @@
         </router-link>
       </div>
     </div>
-    <v-table>
-      <thead>
-        <tr>
-          <th class="text-left">Nome</th>
-          <th class="text-left">Número de matrícula</th>
-          <th class="text-left">E-mail</th>
-          <th class="text-left">Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="student in students" :key="student.name">
-          <td>{{ student.name }}</td>
-          <td>{{ student.enrollmentNumber }}</td>
-          <td>{{ student.email }}</td>
-          <td class="flex space-x-4">
-            <div
-              @click="handleUpdateUser(student._id)"
-              class="flex items-center cursor-pointer hover:scale-125"
-            >
-              <v-icon size="22" icon="mdi-note-edit"></v-icon>
-            </div>
+    <div class="mt-8">
+      <v-text-field
+        v-model="searchTerm"
+        filled
+        label="Buscar aluno"
+        prepend-inner-icon="mdi-magnify"
+        class="w-3/4 bg-white rounded-lg focus:outline-none focus:ring"
+      ></v-text-field>
+      <v-table>
+        <thead>
+          <tr>
+            <th class="text-left">Nome</th>
+            <th class="text-left">Número de matrícula</th>
+            <th class="text-left">E-mail</th>
+            <th class="text-left">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="student in filteredData" :key="student.name">
+            <td>{{ student.name }}</td>
+            <td>{{ student.enrollmentNumber }}</td>
+            <td>{{ student.email }}</td>
+            <td class="flex space-x-4">
+              <div
+                @click="handleUpdateUser(student._id)"
+                class="flex items-center cursor-pointer hover:scale-125"
+              >
+                <v-icon size="22" icon="mdi-note-edit"></v-icon>
+              </div>
 
-            <div
-              @click="handleDeleteUser()"
-              class="flex items-center cursor-pointer hover:scale-125"
-            >
-              <v-icon size="22" icon="mdi-delete"></v-icon>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </v-table>
+              <div
+                @click="handleDeleteUser(student._id)"
+                class="flex items-center cursor-pointer hover:scale-125"
+              >
+                <v-icon size="22" icon="mdi-delete"></v-icon>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </v-table>
+    </div>
   </div>
 </template>
 <script>
@@ -60,10 +69,23 @@ export default {
   data() {
     return {
       students: [],
+      searchTerm: "",
     };
   },
   mounted() {
     this.handleGetStudents();
+  },
+  computed: {
+    filteredData() {
+      return this.students.filter((student) =>
+        student.name.includes(this.searchTerm)
+      );
+    },
+  },
+  watch: {
+    searchTerm() {
+      this.filteredStudents = this.filteredData;
+    },
   },
   methods: {
     handleGetStudents() {
@@ -82,10 +104,26 @@ export default {
         });
     },
     handleUpdateUser(id) {
-      this.$router.push({ name: 'student-update', params: { id: id }});
+      this.$router.push({
+        name: "student-update",
+        params: {
+          id: id,
+        },
+      });
     },
-    handleDeleteUser() {
-      console.log("delete");
+    handleDeleteUser(id) {
+      axios
+        .delete(`${process.env.VUE_APP_API}/students/${id}`, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

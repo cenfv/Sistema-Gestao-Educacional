@@ -1,12 +1,19 @@
-<template class="min-h-screen">
+<template>
   <div class="bg-white max-w-6xl mx-auto rounded-lg p-10 shadow-md space-y-2">
-    <h1 class="text-3xl font-bold text-gray-900">Cadastrar aluno</h1>
-    <p class="text-lg font-normal text-gray-900">Cadastre seus alunos</p>
-
     <div>
-      <h3 class="text-2xl font-bold text-gray-900">Cadastrar novo aluno:</h3>
+      <h1 v-if="mode === 'create'" class="text-3xl font-bold text-gray-900">
+        Cadastrar aluno
+      </h1>
+      <h1 v-else class="text-3xl font-bold text-gray-900">Alterar aluno</h1>
+
+      <p v-if="mode === 'create'" class="text-lg font-normal text-gray-900">
+        Cadastre seus alunos, inserindo suas respectivas informações
+      </p>
+      <p v-else class="text-lg font-normal text-gray-900">
+        Altere seu aluno inserindo suas respectivas informações
+      </p>
     </div>
-    <form @submit.prevent="handleCreateStudent" class="flex flex-col space-y-3">
+    <form @submit.prevent="handleSaveStudent" class="flex flex-col space-y-3">
       <input
         v-model="name"
         class="bg-white rounded-lg p-4 drop-shadow-lg focus:outline-none focus:ring"
@@ -67,6 +74,7 @@ export default {
       password: "",
       subjects: [],
       selectedSubjects: [],
+      mode: this.$route.params.id ? "edit" : "create",
     };
   },
   mounted() {
@@ -83,10 +91,12 @@ export default {
           this.enrollNumber = response.data.student.enrollmentNumber;
           this.email = response.data.student.email;
           this.password = response.data.student.password;
+          console.log(response.data.student);
           this.selectedSubjects = response.data.student.subjects;
         });
     }
   },
+
   methods: {
     handleGetSubjects() {
       axios
@@ -103,29 +113,54 @@ export default {
           console.log(error);
         });
     },
-    handleCreateStudent() {
-      axios
-        .post(
-          `${process.env.VUE_APP_API}/students`,
-          {
-            name: this.name,
-            enrollmentNumber: this.enrollNumber,
-            email: this.email,
-            password: this.password,
-            subjects: this.selectedSubjects,
-          },
-          {
-            headers: {
-              authorization: `Bearer ${localStorage.getItem("token")}`,
+    handleSaveStudent() {
+      if (this.$route.params.id) {
+        axios
+          .put(
+            `${process.env.VUE_APP_API}/students/${this.$route.params.id}`,
+            {
+              name: this.name,
+              enrollmentNumber: this.enrollNumber,
+              email: this.email,
+              password: this.password,
+              subjects: this.selectedSubjects,
             },
-          }
-        )
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+            {
+              headers: {
+                authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          )
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        axios
+          .post(
+            `${process.env.VUE_APP_API}/students`,
+            {
+              name: this.name,
+              enrollmentNumber: this.enrollNumber,
+              email: this.email,
+              password: this.password,
+              subjects: this.selectedSubjects,
+            },
+            {
+              headers: {
+                authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          )
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
   },
 };
