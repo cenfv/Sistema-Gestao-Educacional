@@ -1,8 +1,13 @@
-const TestSchema = new mongoose.Schema({
-  subject: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Subject",
-    required: [true, "Subject is required"],
+const mongoose = require("mongoose");
+
+const testSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: [true, "Title is required"],
+  },
+  description: {
+    type: String,
+    required: [true, "Description is required"],
   },
   questions: [
     {

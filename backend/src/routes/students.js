@@ -5,9 +5,8 @@ var { expressjwt: jwt } = require("express-jwt");
 require("dotenv").config();
 
 router.get("/", async (req, res, next) => {
-  const targetId = req.params.id;
   try {
-    const student = await studentController.getAllStudents(targetId);
+    const student = await studentController.getAllStudents();
     return res.status(200).json({
       student,
     });
