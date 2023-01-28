@@ -31,13 +31,13 @@
       <v-autocomplete
         multiple
         class="bg-white rounded-lg p-4 drop-shadow-lg focus:outline-none focus:ring"
-        :items="students"
-        v-model="selectedStudents"
+        :items="tests"
+        v-model="selectedTests"
         label="Provas"
         placeholder="Provas atribuídas"
         item-value="_id"
-        item-title="name"
-        item-text="name"
+        item-title="title"
+        item-text="title"
         chips
       >
       </v-autocomplete>
@@ -61,16 +61,17 @@ export default {
       students: [],
       tests: [],
       selectedStudents: [],
+      selectedTests: [],
     };
   },
   created() {
     this.handleGetStudents();
-    //this.getTests();
+    this.handleGetTests();
   },
   methods: {
     handleGetStudents() {
       axios
-        .get("http://localhost:3000/students", {
+        .get(`${process.env.VUE_APP_API}/students`, {
           headers: {
             authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -83,8 +84,42 @@ export default {
           console.log(error);
         });
     },
+    handleGetTests() {
+      axios
+        .get(`${process.env.VUE_APP_API}/tests`, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data.test);
+          this.tests = response.data.test;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     handleCreateSubject() {
-      console.log(this.selectedStudents);
+      axios
+        .post(
+          `${process.env.VUE_APP_API}/subjects`,
+          {
+            name: this.name,
+            students: this.selectedStudents,
+            tests: this.selectedTests,
+          },
+          {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

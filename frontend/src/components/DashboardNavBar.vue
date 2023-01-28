@@ -28,7 +28,7 @@
             Questões
           </router-link>
           <router-link
-            to="/students"
+            to="/student"
             class="font-medium text-gray-500 hover:text-blue-600"
           >
             Alunos

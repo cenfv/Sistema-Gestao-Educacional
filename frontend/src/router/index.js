@@ -10,6 +10,7 @@ import DashboardView from "@/views/DashboardView.vue";
 import QuestionView from "@/views/QuestionView.vue";
 import SubjectView from "@/views/SubjectView.vue";
 import TestView from "@/views/TestView.vue";
+import StudentView from "@/views/StudentView.vue";
 
 const routes = [
   {
@@ -78,6 +79,14 @@ const routes = [
     name: "test",
     components: {
       default:TestView,
+      navbar: DashboardNavBar,
+    }
+  },
+  {
+    path: "/student",
+    name: "student",
+    components: {
+      default:StudentView,
       navbar: DashboardNavBar,
     }
   }
