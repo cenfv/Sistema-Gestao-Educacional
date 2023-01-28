@@ -19,11 +19,12 @@ router.get("/", async (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
-  const { name, enrollmentNumber, email, password } = req.body;
+  const { name, enrollmentNumber,subjects, email, password } = req.body;
   try {
     const student = await studentController.createStudent(
       name,
       enrollmentNumber,
+      subjects,
       email,
       password
     );

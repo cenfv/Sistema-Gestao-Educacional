@@ -46,4 +46,45 @@ router.post(
   }
 );
 
+router.put(
+  "/:id",
+  jwt({ secret: process.env.SECRET, algorithms: ["HS256"] }),
+  async (req, res, next) => {
+    try {
+      const { title, description, alternatives, correctAlternative } = req.body;
+      const question = await questionController.updateQuestion(
+        req.auth.id,
+        title,
+        description,
+        alternatives,
+        correctAlternative
+      );
+      return res.status(200).json({
+        question,
+      });
+    } catch (err) {
+      return res.status(400).json({
+        validationError: err,
+      });
+    }
+  }
+);
+
+router.delete(
+  "/:id",
+  jwt({ secret: process.env.SECRET, algorithms: ["HS256"] }),
+  async (req, res, next) => {
+    try {
+      const question = await questionController.deleteQuestion(req.params.id);
+      return res.status(200).json({
+        msg: "Question deleted successfully",
+      });
+    } catch (err) {
+      return res.status(400).json({
+        validationError: err,
+      });
+    }
+  }
+);
+
 module.exports = router;

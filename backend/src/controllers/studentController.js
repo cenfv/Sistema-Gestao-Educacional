@@ -15,7 +15,7 @@ const handleErrors = (err) => {
   return errors;
 };
 
-exports.createStudent = async (name, enrollmentNumber, email, password) => {
+exports.createStudent = async (name, enrollmentNumber,subjects, email, password) => {
   try {
     let passwordHash = "";
     if (password.length >= 6) {
@@ -26,6 +26,7 @@ exports.createStudent = async (name, enrollmentNumber, email, password) => {
     const student = new Student({
       name,
       enrollmentNumber,
+      subjects,
       email,
       password: passwordHash,
     });

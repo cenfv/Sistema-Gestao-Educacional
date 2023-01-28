@@ -41,3 +41,36 @@ exports.getAllQuestion = async () => {
     return question;
   }
 };
+
+exports.updateQuestion = async (
+  id,
+  title,
+  description,
+  alternatives,
+  correctAlternative
+) => {
+  try {
+    const question = await Question.findById(id);
+    const res = await question.updateOne({
+      title,
+      description,
+      alternatives,
+      correctAlternative,
+    });
+    return res;
+  } catch (err) {
+    const errors = handleErrors(err);
+    throw errors;
+  }
+};
+
+exports.deleteQuestion = async (id) => {
+  try {
+    const question = await Question.findById(id);
+    const res = await question.deleteOne();
+    return res;
+  } catch (err) {
+    const errors = handleErrors(err);
+    throw errors;
+  }
+};
