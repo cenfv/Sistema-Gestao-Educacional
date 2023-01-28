@@ -8,6 +8,7 @@ import NewsView from "@/views/NewsView.vue";
 import LoginView from "@/views/LoginView.vue";
 import DashboardView from "@/views/DashboardView.vue";
 import QuestionView from "@/views/QuestionView.vue";
+import SubjectView from "@/views/SubjectView.vue";
 
 const routes = [
   {
@@ -63,6 +64,14 @@ const routes = [
       navbar: DashboardNavBar,
     }
   },
+  {
+    path: "/subject",
+    name: "subject",
+    components: {
+      default:SubjectView,
+      navbar: DashboardNavBar,
+    }
+  }
 ];
 
 const router = createRouter({
