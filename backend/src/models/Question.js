@@ -15,12 +15,10 @@ const questionSchema = new mongoose.Schema({
   alternatives: [
     {
       description: String,
-      required: [true, "alternatives is required"],
     },
   ],
   correctAlternative: {
-    type: Number,
-    required: [true, "correctAlternative is required"],
+    type: mongoose.Schema.Types.ObjectId,
   },
 
   createdAt: {
