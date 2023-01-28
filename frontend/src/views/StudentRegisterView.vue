@@ -71,6 +71,21 @@ export default {
   },
   mounted() {
     this.handleGetSubjects();
+    if (this.$route.params.id) {
+      axios
+        .get(`${process.env.VUE_APP_API}/students/${this.$route.params.id}`, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((response) => {
+          this.name = response.data.student.name;
+          this.enrollNumber = response.data.student.enrollmentNumber;
+          this.email = response.data.student.email;
+          this.password = response.data.student.password;
+          this.selectedSubjects = response.data.student.subjects;
+        });
+    }
   },
   methods: {
     handleGetSubjects() {

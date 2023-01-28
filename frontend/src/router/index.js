@@ -11,6 +11,11 @@ import QuestionView from "@/views/QuestionView.vue";
 import SubjectView from "@/views/SubjectView.vue";
 import TestView from "@/views/TestView.vue";
 import StudentView from "@/views/StudentView.vue";
+import QuestionRegisterView from "@/views/QuestionRegisterView.vue";
+import SubjectRegisterView from "@/views/SubjectRegisterView.vue";
+import TestRegisterView from "@/views/TestRegisterView.vue";
+import StudentRegisterView from "@/views/StudentRegisterView.vue";
+
 
 const routes = [
   {
@@ -89,7 +94,73 @@ const routes = [
       default:StudentView,
       navbar: DashboardNavBar,
     }
-  }
+  },
+  {
+    path: "/question-register",
+    name: "question-register",
+    components: {
+      default:QuestionRegisterView,
+      navbar: DashboardNavBar,
+    }
+  },
+  {
+    path: "/subject-register",
+    name: "subject-register",
+    components: {
+      default:SubjectRegisterView,
+      navbar: DashboardNavBar,
+    }
+  },
+  {
+    path: "/test-register",
+    name: "test-register",
+    components: {
+      default:TestRegisterView,
+      navbar: DashboardNavBar,
+    }
+  },
+  {
+    path: "/student-register",
+    name: "student-register",
+    components: {
+      default:StudentRegisterView,
+      navbar: DashboardNavBar,
+    }
+  },
+  {
+    path: "/student/:id",
+    name: "student-update",
+    components: {
+      default:StudentRegisterView,
+      navbar: DashboardNavBar,
+    }
+  },
+  {
+    path: "/question/:id",
+    name: "question-update",
+    components: {
+      default:QuestionRegisterView,
+      navbar: DashboardNavBar,
+    }
+  },
+  {
+    path: "/subject/:id",
+    name: "subject-update",
+    components: {
+      default:SubjectRegisterView,
+      navbar: DashboardNavBar,
+    }
+  },
+  {
+    path: "/test/:id",
+    name: "test-update",
+    components: {
+      default:TestRegisterView,
+      navbar: DashboardNavBar,
+    }
+  },
+  
+  
 ];
 
 const router = createRouter({
