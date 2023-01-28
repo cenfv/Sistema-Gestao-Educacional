@@ -27,6 +27,12 @@
           >
             Questões
           </router-link>
+          <router-link
+            to="/students"
+            class="font-medium text-gray-500 hover:text-blue-600"
+          >
+            Alunos
+          </router-link>
         </div>
 
         <div class="flex space-x-10 items-center">

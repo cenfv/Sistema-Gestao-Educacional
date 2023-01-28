@@ -40,7 +40,7 @@
           class="flex items-center cursor-pointer"
           @click="handleRemoveAlternative(alternative.id)"
         >
-          <font-awesome-icon class="absolute -ml-6" icon="fa-solid fa-trash" />
+          <v-icon size="22" class="absolute -ml-8" icon="mdi-delete"></v-icon>
         </div>
       </div>
       <button
@@ -66,7 +66,7 @@
 
       <div className="flex justify-end">
         <button
-          className="mt-3 w-36  py-4  text-white font-medium rounded-lg text-center drop-shadow-lg 5 bg-blue-500 hover:bg-blue-700 "
+          className="mt-3 w-36  py-3  text-white font-medium rounded-lg text-center drop-shadow-lg 5 bg-blue-500 hover:bg-blue-700 "
         >
           Salvar
         </button>
@@ -77,6 +77,7 @@
 
 <script>
 import axios from "axios";
+
 export default {
   components: {},
   data() {
