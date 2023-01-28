@@ -26,7 +26,7 @@ exports.createTest = async (title, description, questions) => {
   }
 };
 exports.getAllTest = async () => {
-  const test = await Test.find();
+  const test = await Test.find().populate("questions");
   if (test) {
     return test;
   }

@@ -11,11 +11,8 @@ const testSchema = new mongoose.Schema({
   },
   questions: [
     {
-      question: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Question",
-
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Question",
     },
   ],
 });

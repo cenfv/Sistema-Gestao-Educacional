@@ -25,7 +25,7 @@ exports.createQuestion = async (
     const correctID = res.alternatives.at(correctAlternative)._id;
     res = await Question.findByIdAndUpdate(
       res._id,
-      { correctAlternative: correct },
+      { correctAlternative: correctID },
       { new: true }
     );
 
