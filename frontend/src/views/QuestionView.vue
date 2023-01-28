@@ -105,7 +105,7 @@ export default {
     handleCreateQuestion() {
       axios
         .post(
-          "http://localhost:3000/questions",
+          `${process.env.VUE_APP_API}/questions`,
           {
             title: this.title,
             description: this.description,
