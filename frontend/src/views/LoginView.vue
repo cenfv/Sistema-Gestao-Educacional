@@ -71,7 +71,7 @@ export default {
               name: response.data.user.name,
               email: response.data.user.email,
             });
-            this.$router.push("/dashboard");
+            this.$router.push('/student-dashboard');
           }
         });
     },

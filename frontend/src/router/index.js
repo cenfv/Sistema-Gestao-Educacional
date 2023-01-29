@@ -1,12 +1,12 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
 import HomeNavBar from "@/components/HomeNavBar.vue";
-import DashboardNavBar from "@/components/DashboardNavBar.vue";
+import AdminNavBar from "@/components/AdminNavBar.vue";
 import AboutView from "@/views/AboutView.vue";
 import ContactView from "@/views/ContactView.vue";
 import NewsView from "@/views/NewsView.vue";
 import LoginView from "@/views/LoginView.vue";
-import DashboardView from "@/views/DashboardView.vue";
+import AdminDashboardView from "@/views/AdminDashboardView.vue";
 import QuestionView from "@/views/QuestionView.vue";
 import SubjectView from "@/views/SubjectView.vue";
 import TestView from "@/views/TestView.vue";
@@ -15,7 +15,11 @@ import QuestionRegisterView from "@/views/QuestionRegisterView.vue";
 import SubjectRegisterView from "@/views/SubjectRegisterView.vue";
 import TestRegisterView from "@/views/TestRegisterView.vue";
 import StudentRegisterView from "@/views/StudentRegisterView.vue";
-
+import AnswerTestView from "@/views/AnswerTestView.vue";
+import AnswerQuestionView from "@/views/AnswerQuestionView.vue";
+import StudentNavBarVue from "@/components/StudentNavBar.vue";
+import StudentDashboardView from "@/views/StudentDashboardView.vue";
+import StudentSubjectsView from "@/views/StudentSubjectsView.vue";
 
 const routes = [
   {
@@ -59,8 +63,8 @@ const routes = [
     path: "/dashboard",
     name: "dashboard",
     components: {
-      default:DashboardView,
-      navbar: DashboardNavBar,
+      default:AdminDashboardView,
+      navbar: AdminNavBar,
     }
   },
   {
@@ -68,7 +72,7 @@ const routes = [
     name: "question",
     components: {
       default:QuestionView,
-      navbar: DashboardNavBar,
+      navbar: AdminNavBar,
     }
   },
   {
@@ -76,7 +80,7 @@ const routes = [
     name: "subject",
     components: {
       default:SubjectView,
-      navbar: DashboardNavBar,
+      navbar: AdminNavBar,
     }
   },
   {
@@ -84,7 +88,7 @@ const routes = [
     name: "test",
     components: {
       default:TestView,
-      navbar: DashboardNavBar,
+      navbar: AdminNavBar,
     }
   },
   {
@@ -92,7 +96,7 @@ const routes = [
     name: "student",
     components: {
       default:StudentView,
-      navbar: DashboardNavBar,
+      navbar: AdminNavBar,
     }
   },
   {
@@ -100,7 +104,7 @@ const routes = [
     name: "question-register",
     components: {
       default:QuestionRegisterView,
-      navbar: DashboardNavBar,
+      navbar: AdminNavBar,
     }
   },
   {
@@ -108,7 +112,7 @@ const routes = [
     name: "subject-register",
     components: {
       default:SubjectRegisterView,
-      navbar: DashboardNavBar,
+      navbar: AdminNavBar,
     }
   },
   {
@@ -116,7 +120,7 @@ const routes = [
     name: "test-register",
     components: {
       default:TestRegisterView,
-      navbar: DashboardNavBar,
+      navbar: AdminNavBar,
     }
   },
   {
@@ -124,7 +128,7 @@ const routes = [
     name: "student-register",
     components: {
       default:StudentRegisterView,
-      navbar: DashboardNavBar,
+      navbar: AdminNavBar,
     }
   },
   {
@@ -133,7 +137,7 @@ const routes = [
     props: true,
     components: {
       default:StudentRegisterView,
-      navbar: DashboardNavBar,
+      navbar: AdminNavBar,
     }
   },
   {
@@ -141,7 +145,7 @@ const routes = [
     name: "question-update",
     components: {
       default:QuestionRegisterView,
-      navbar: DashboardNavBar,
+      navbar: AdminNavBar,
     }
   },
   {
@@ -149,7 +153,7 @@ const routes = [
     name: "subject-update",
     components: {
       default:SubjectRegisterView,
-      navbar: DashboardNavBar,
+      navbar: AdminNavBar,
     }
   },
   {
@@ -157,10 +161,41 @@ const routes = [
     name: "test-update",
     components: {
       default:TestRegisterView,
-      navbar: DashboardNavBar,
+      navbar: AdminNavBar,
     }
   },
-  
+  {
+    path: "/test/answer/:id",
+    name: "answer-test",
+    components: {
+      default:AnswerTestView,
+      navbar: AdminNavBar,
+    }
+  },
+  {
+    path: "/test/answer/question",
+    name: "answer-question",
+    components: {
+      default:AnswerQuestionView,
+      navbar: AdminNavBar,
+    }
+  },
+  {
+    path: "/student-dashboard",
+    name: "student-dashboard",
+    components: {
+      default:StudentDashboardView,
+      navbar: StudentNavBarVue,
+    }
+  },
+  {
+    path: "/student-subjects",
+    name: "student-subjects",
+    components: {
+      default:StudentSubjectsView,
+      navbar: StudentNavBarVue,
+    }
+  },
   
 ];
 

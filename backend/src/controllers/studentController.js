@@ -54,7 +54,7 @@ exports.studentAuth = async (email, password) => {
 };
 
 exports.getStudentById = async (id) => {
-  const student = await Student.findById(id, "-password");
+  const student = await Student.findById(id, "-password").populate("subjects");
   if (student) {
     return student;
   }

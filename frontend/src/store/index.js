@@ -8,6 +8,16 @@ export default createStore({
       email: "",
       isLogged: false,
     },
+    test: {
+      id: "",
+      questionIndex: 0,
+      questions: [
+        {
+          id: "",
+          answer: "",
+        },
+      ],
+    },
   },
   getters: {},
   mutations: {
@@ -22,6 +32,12 @@ export default createStore({
         isLogged: false,
       };
     },
+    setTest(state, payload) {
+      state.test = payload;
+    },
+    incrementQuestionIndex(state) {
+      state.test.questionIndex++;
+    }
   },
   actions: {
     setUser({ commit }, { name, id, email }) {
@@ -36,6 +52,12 @@ export default createStore({
     logout({ commit }) {
       commit("logout");
     },
+    setQuestions({ commit }, payload) {
+      commit("setTest", payload);
+    },
+    incrementQuestionIndex({ commit }) {
+      commit("incrementQuestionIndex");
+    }
   },
   modules: {},
 });
