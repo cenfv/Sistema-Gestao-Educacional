@@ -5,31 +5,31 @@
         <div class="flex items-center space-x-10">
           <router-link
             to="/dashboard"
-            class="font-medium text-gray-500 hover:text-blue-600"
+            class="font-medium text-gray-500 hover:text-black"
           >
             Dashboard
           </router-link>
           <router-link
             to="/subject"
-            class="font-medium text-gray-500 hover:text-blue-600"
+            class="font-medium text-gray-500 hover:text-black"
           >
             Matérias
           </router-link>
           <router-link
             to="/test"
-            class="font-medium text-gray-500 hover:text-blue-600"
+            class="font-medium text-gray-500 hover:text-black"
           >
             Provas
           </router-link>
           <router-link
             to="/question"
-            class="font-medium text-gray-500 hover:text-blue-600"
+            class="font-medium text-gray-500 hover:text-black"
           >
             Questões
           </router-link>
           <router-link
             to="/student"
-            class="font-medium text-gray-500 hover:text-blue-600"
+            class="font-medium text-gray-500 hover:text-black"
           >
             Alunos
           </router-link>

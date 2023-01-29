@@ -5,25 +5,25 @@
         <div class="flex space-x-10">
           <router-link
             to="/"
-            class="font-medium  text-gray-500 hover:text-blue-600"
+            class="font-medium  text-gray-500 hover:text-black"
           >
             Home
           </router-link>
           <router-link
             to="/about"
-            class="font-medium  text-gray-500 hover:text-blue-600"
+            class="font-medium  text-gray-500 hover:text-black"
           >
             Quem somos
           </router-link>
           <router-link
             to="/contact"
-            class="font-medium  text-gray-500 hover:text-blue-600"
+            class="font-medium  text-gray-500 hover:text-black"
           >
             Contato
           </router-link>
           <router-link
             to="/news"
-            class="font-medium  text-gray-500 hover:text-blue-600"
+            class="font-medium  text-gray-500 hover:text-black"
           >
             Novidades
           </router-link>
@@ -32,7 +32,7 @@
         <button>
           <router-link
             to="/login"
-            class="px-6 py-2 rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-800"
+            class="px-6 py-2 rounded-md shadow-sm text-base font-medium text-white bg-gray-700 hover:bg-gray-800"
           >
             Entrar
           </router-link>

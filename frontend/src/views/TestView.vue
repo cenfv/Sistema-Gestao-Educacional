@@ -93,7 +93,7 @@
             this.tests = response.data.test.filter((test) => {
               test.createdAt = new Date(
                 test.createdAt
-              ).toLocaleDateString("pt-BR");
+              ).toLocaleDateString();
               return test.title.includes(this.searchTerm);
             });
           })

@@ -93,7 +93,7 @@
             this.subjects = response.data.subject.filter((subject) => {
               subject.createdAt = new Date(
                 subject.createdAt
-              ).toLocaleDateString("pt-BR");
+              ).toLocaleDateString();
               return subject.name.includes(this.searchTerm);
             });
           })

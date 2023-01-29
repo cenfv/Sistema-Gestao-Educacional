@@ -47,7 +47,7 @@
       </div>
       <button
         @click="handleAddAlternative"
-        class="font-medium m-2 self-start text-blue-500"
+        class="font-medium m-2 self-start text-gray-700"
         type="button"
       >
         + Adicionar alternativa
@@ -68,7 +68,7 @@
 
       <div className="flex justify-end">
         <button
-          className="mt-3 w-36  py-3  text-white font-medium rounded-lg text-center drop-shadow-lg 5 bg-blue-500 hover:bg-blue-700 "
+          className="mt-3 w-36  py-3  text-white font-medium rounded-lg text-center drop-shadow-lg 5 bg-gray-700 hover:bg-gray-800 "
         >
           Salvar
         </button>

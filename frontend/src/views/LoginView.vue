@@ -11,13 +11,13 @@
           <input
             v-model="email"
             type="email"
-            class="p-2 w-full border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:border-blue-500 sm:text-sm"
+            class="p-2 w-full border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:border-gray-500 sm:text-sm"
             placeholder="Email"
           />
           <input
             v-model="password"
             type="password"
-            class="p-2 w-full border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:border-blue-500 sm:text-sm"
+            class="p-2 w-full border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:border-gray-500 sm:text-sm"
             placeholder="Senha"
           />
         </div>
@@ -25,21 +25,21 @@
           <div class="flex items-center">
             <input
               type="checkbox"
-              class="h-4 w-4 text-blue-600 border-gray-300 rounded"
+              class="h-4 w-4 text-gray-600 border-gray-300 rounded"
             />
             <label class="ml-2 text-sm text-gray-900"> Lembrar-me </label>
           </div>
           <div class="text-sm">
             <router-link
               to="/"
-              class="font-medium text-blue-600 hover:underline"
+              class="font-medium text-gray-700 hover:underline"
             >
               Esqueceu sua senha?
             </router-link>
           </div>
         </div>
         <button
-          class="px-6 py-2 w-full rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-800"
+          class="px-6 py-2 w-full rounded-md shadow-sm text-base font-medium text-white bg-gray-700 hover:bg-gray-800"
         >
           Entrar
         </button>

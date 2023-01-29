@@ -10,7 +10,7 @@
       <div class="flex">
         <router-link
           to="/question-register"
-          class="flex py-3 px-3 text-white text-sm font-normal rounded-lg text-center drop-shadow-lg 5 bg-slate-700 hover:bg-slate-900"
+          class="flex py-3 px-3 text-white text-sm font-normal rounded-lg text-center drop-shadow-lg 5 bg-gray-700 hover:bg-slate-900"
         >
           <div class="flex mr-2 items-baseline">
             <v-icon icon="mdi-account-plus"></v-icon>
@@ -93,7 +93,7 @@ export default {
           this.questions = response.data.question.filter((question) => {
             question.createdAt = new Date(
               question.createdAt
-            ).toLocaleDateString("pt-BR");
+            ).toLocaleDateString();
             return question.title.includes(this.searchTerm);
           });
         })
