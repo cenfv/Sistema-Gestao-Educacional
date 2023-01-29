@@ -1,14 +1,15 @@
 <template class="min-h-screen">
   <div class="bg-white max-w-6xl mx-auto rounded-lg p-10 shadow-md space-y-2">
-    <h1 class="text-3xl font-bold text-gray-900">Adicionar matéria</h1>
-    <p class="text-lg font-normal text-gray-900">
+    <h1 v-if="mode === 'create'" class="text-3xl font-bold text-gray-900">Adicionar matéria</h1>
+    <h1 v-else class="text-3xl font-bold text-gray-900">Alterar matéria</h1>
+    <p v-if="mode === 'create'" class="text-lg font-normal text-gray-900">
       Crie matérias para seus alunos.
     </p>
-
-    <div>
-      <h3 class="text-2xl font-bold text-gray-900">Cadastrar nova Matéria:</h3>
-    </div>
-    <form @submit.prevent="handleCreateSubject" class="flex flex-col space-y-3">
+    <p v-else class="text-lg font-normal text-gray-900">
+      Altere o conteúdo da matéria inserindo suas respectivas informações
+    </p>
+  
+    <form @submit.prevent="handleSaveSubject" class="flex flex-col space-y-3">
       <input
         v-model="name"
         class="bg-white rounded-lg p-4 drop-shadow-lg focus:outline-none focus:ring"
@@ -62,11 +63,25 @@ export default {
       tests: [],
       selectedStudents: [],
       selectedTests: [],
+      mode: this.$route.params.id ? "edit" : "create",
     };
   },
   created() {
     this.handleGetStudents();
     this.handleGetTests();
+    if (this.mode === "edit") {
+      axios
+        .get(`${process.env.VUE_APP_API}/subjects/${this.$route.params.id}`, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((response) => {
+          this.name = response.data.subject.name;
+          this.selectedStudents = response.data.subject.students;
+          this.selectedTests = response.data.subject.tests;
+        });
+    }
   },
   methods: {
     handleGetStudents() {
@@ -99,27 +114,50 @@ export default {
           console.log(error);
         });
     },
-    handleCreateSubject() {
-      axios
-        .post(
-          `${process.env.VUE_APP_API}/subjects`,
-          {
-            name: this.name,
-            students: this.selectedStudents,
-            tests: this.selectedTests,
-          },
-          {
-            headers: {
-              authorization: `Bearer ${localStorage.getItem("token")}`,
+    handleSaveSubject() {
+      if (this.mode === "edit") {
+        axios
+          .put(
+            `${process.env.VUE_APP_API}/subjects/${this.$route.params.id}`,
+            {
+              name: this.name,
+              students: this.selectedStudents,
+              tests: this.selectedTests,
             },
-          }
-        )
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+            {
+              headers: {
+                authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          )
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        axios
+          .post(
+            `${process.env.VUE_APP_API}/subjects`,
+            {
+              name: this.name,
+              students: this.selectedStudents,
+              tests: this.selectedTests,
+            },
+            {
+              headers: {
+                authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          )
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
   },
 };

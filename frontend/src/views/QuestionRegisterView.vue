@@ -1,13 +1,15 @@
 <template class="min-h-screen">
   <div class="bg-white max-w-6xl mx-auto rounded-lg p-10 shadow-md space-y-2">
-    <h1 class="text-3xl font-bold text-gray-900">Adicionar questão</h1>
-    <p class="text-lg font-normal text-gray-900">
+    <h1 v-if="mode === 'create'" class="text-3xl font-bold text-gray-900">
+      Adicionar questão
+    </h1>
+    <h1 v-else class="text-3xl font-bold text-gray-900">Alterar questão</h1>
+    <p v-if="mode === 'create'" class="text-lg font-normal text-gray-900">
       Crie questões para as suas provas.
     </p>
-
-    <div>
-      <h3 class="text-2xl font-bold text-gray-900">Cadastrar nova questão:</h3>
-    </div>
+    <p v-else class="text-lg font-normal text-gray-900">
+      Altere o conteúdo da questão inserindo suas respectivas informações
+    </p>
 
     <form
       @submit.prevent="handleCreateQuestion"
@@ -37,7 +39,7 @@
         />
 
         <div
-          class="flex items-center cursor-pointer"
+          class="flex items-center cursor-pointer hover:scale-110"
           @click="handleRemoveAlternative(alternative.id)"
         >
           <v-icon size="22" class="absolute -ml-8" icon="mdi-delete"></v-icon>
@@ -57,7 +59,7 @@
         <option value="" disabled>Selecione a alternativa correta</option>
         <option
           v-for="alternative in alternatives"
-          :value="alternative.id"
+          :value="alternative"
           :key="alternative.id"
         >
           {{ alternative.description }}
@@ -86,7 +88,37 @@ export default {
       description: "",
       selectedAlternative: "",
       alternatives: [{ id: 0, description: "" }],
+      mode: this.$route.params.id ? "edit" : "create",
     };
+  },
+  mounted() {
+    if (this.$route.params.id) {
+      axios
+        .get(`${process.env.VUE_APP_API}/questions/${this.$route.params.id}`, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((response) => {
+          this.title = response.data.question.title;
+          this.description = response.data.question.description;
+          this.alternatives = response.data.question.alternatives;
+          this.selectedAlternative = {
+            description: this.alternatives
+              .filter((alternative) => {
+                if (
+                  alternative._id === response.data.question.correctAlternative
+                ) {
+                  return alternative.description;
+                }
+              })
+              .at(0).description,
+            _id: response.data.question.correctAlternative,
+          };
+
+          console.log(this.selectedAlternative);
+        });
+    }
   },
   methods: {
     handleAddAlternative() {
@@ -103,6 +135,7 @@ export default {
       );
     },
     handleCreateQuestion() {
+      console.log(this.selectedAlternative);
       axios
         .post(
           `${process.env.VUE_APP_API}/questions`,
@@ -110,7 +143,7 @@ export default {
             title: this.title,
             description: this.description,
             alternatives: this.alternatives,
-            correctAlternative: this.selectedAlternative,
+            correctAlternative: this.selectedAlternative.id,
           },
           {
             headers: {

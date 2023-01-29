@@ -37,7 +37,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="student in filteredData" :key="student.name">
+          <tr v-for="student in filteredData" :key="student._id">
             <td>{{ student.name }}</td>
             <td>{{ student.enrollmentNumber }}</td>
             <td>{{ student.email }}</td>
@@ -80,11 +80,6 @@ export default {
       return this.students.filter((student) =>
         student.name.includes(this.searchTerm)
       );
-    },
-  },
-  watch: {
-    searchTerm() {
-      this.filteredStudents = this.filteredData;
     },
   },
   methods: {

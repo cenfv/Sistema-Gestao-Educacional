@@ -10,7 +10,7 @@
         Cadastre seus alunos, inserindo suas respectivas informações
       </p>
       <p v-else class="text-lg font-normal text-gray-900">
-        Altere seu aluno inserindo suas respectivas informações
+        Altere o conteúdo do aluno inserindo suas respectivas informações
       </p>
     </div>
     <form @submit.prevent="handleSaveStudent" class="flex flex-col space-y-3">
@@ -114,7 +114,7 @@ export default {
         });
     },
     handleSaveStudent() {
-      if (this.$route.params.id) {
+      if (this.mode === "edit") {
         axios
           .put(
             `${process.env.VUE_APP_API}/students/${this.$route.params.id}`,
