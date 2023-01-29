@@ -23,6 +23,30 @@ router.get(
   }
 );
 
+router.get(
+  "/:id",
+  jwt({ secret: process.env.SECRET, algorithms: ["HS256"] }),
+  async (req, res, next) => {
+    const targetId = req.params.id;
+    try {
+      const question = await questionController.getQuestionById(targetId);
+      if (question) {
+        return res.status(200).json({
+          question,
+        });
+      }
+      return res.status(404).json({
+        msg: "Question not found",
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(404).json({
+        msg: "Question not found",
+      });
+    }
+  }
+);
+
 router.post(
   "/",
   jwt({ secret: process.env.SECRET, algorithms: ["HS256"] }),
@@ -53,7 +77,7 @@ router.put(
     try {
       const { title, description, alternatives, correctAlternative } = req.body;
       const question = await questionController.updateQuestion(
-        req.auth.id,
+        req.params.id,
         title,
         description,
         alternatives,

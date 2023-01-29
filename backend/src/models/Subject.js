@@ -17,6 +17,10 @@ const subjectSchema = new mongoose.Schema({
       ref: "Test",
     },
   ],
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 module.exports = mongoose.model("Subject", subjectSchema);

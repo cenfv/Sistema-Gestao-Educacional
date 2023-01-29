@@ -41,6 +41,13 @@ exports.getAllQuestion = async () => {
     return question;
   }
 };
+exports.getQuestionById = async (id) => {
+  const question = await Question.findById(id)
+ 
+  if (question) {
+    return question;
+  }
+};
 
 exports.updateQuestion = async (
   id,

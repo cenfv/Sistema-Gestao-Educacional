@@ -18,25 +18,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
-  const { name, enrollmentNumber,subjects, email, password } = req.body;
-  try {
-    const student = await studentController.createStudent(
-      name,
-      enrollmentNumber,
-      subjects,
-      email,
-      password
-    );
-    return res.status(201).json({
-      student,
-    });
-  } catch (err) {
-    return res.status(400).json({
-      validationError: err,
-    });
-  }
-});
 router.get(
   "/:id",
   jwt({ secret: process.env.SECRET, algorithms: ["HS256"] }),
@@ -60,6 +41,26 @@ router.get(
     }
   }
 );
+
+router.post("/", async (req, res, next) => {
+  const { name, enrollmentNumber, subjects, email, password } = req.body;
+  try {
+    const student = await studentController.createStudent(
+      name,
+      enrollmentNumber,
+      subjects,
+      email,
+      password
+    );
+    return res.status(201).json({
+      student,
+    });
+  } catch (err) {
+    return res.status(400).json({
+      validationError: err,
+    });
+  }
+});
 
 router.put(
   "/:id",

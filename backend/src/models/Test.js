@@ -15,6 +15,10 @@ const testSchema = new mongoose.Schema({
       ref: "Question",
     },
   ],
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 module.exports = mongoose.model("Test", testSchema);
