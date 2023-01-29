@@ -17,9 +17,10 @@ import TestRegisterView from "@/views/TestRegisterView.vue";
 import StudentRegisterView from "@/views/StudentRegisterView.vue";
 import AnswerTestView from "@/views/AnswerTestView.vue";
 import AnswerQuestionView from "@/views/AnswerQuestionView.vue";
-import StudentNavBarVue from "@/components/StudentNavBar.vue";
+import StudentNavBar from "@/components/StudentNavBar.vue";
 import StudentDashboardView from "@/views/StudentDashboardView.vue";
 import StudentSubjectsView from "@/views/StudentSubjectsView.vue";
+import SubjectTestsView from "@/views/SubjectTestsView.vue";
 
 const routes = [
   {
@@ -63,140 +64,147 @@ const routes = [
     path: "/dashboard",
     name: "dashboard",
     components: {
-      default:AdminDashboardView,
+      default: AdminDashboardView,
       navbar: AdminNavBar,
-    }
+    },
   },
   {
     path: "/question",
     name: "question",
     components: {
-      default:QuestionView,
+      default: QuestionView,
       navbar: AdminNavBar,
-    }
+    },
   },
   {
     path: "/subject",
     name: "subject",
     components: {
-      default:SubjectView,
+      default: SubjectView,
       navbar: AdminNavBar,
-    }
+    },
   },
   {
     path: "/test",
     name: "test",
     components: {
-      default:TestView,
+      default: TestView,
       navbar: AdminNavBar,
-    }
+    },
   },
   {
     path: "/student",
     name: "student",
     components: {
-      default:StudentView,
+      default: StudentView,
       navbar: AdminNavBar,
-    }
+    },
   },
   {
     path: "/question-register",
     name: "question-register",
     components: {
-      default:QuestionRegisterView,
+      default: QuestionRegisterView,
       navbar: AdminNavBar,
-    }
+    },
   },
   {
     path: "/subject-register",
     name: "subject-register",
     components: {
-      default:SubjectRegisterView,
+      default: SubjectRegisterView,
       navbar: AdminNavBar,
-    }
+    },
   },
   {
     path: "/test-register",
     name: "test-register",
     components: {
-      default:TestRegisterView,
+      default: TestRegisterView,
       navbar: AdminNavBar,
-    }
+    },
   },
   {
     path: "/student-register",
     name: "student-register",
     components: {
-      default:StudentRegisterView,
+      default: StudentRegisterView,
       navbar: AdminNavBar,
-    }
+    },
   },
   {
     path: "/student/:id",
     name: "student-update",
     props: true,
     components: {
-      default:StudentRegisterView,
+      default: StudentRegisterView,
       navbar: AdminNavBar,
-    }
+    },
   },
   {
     path: "/question/:id",
     name: "question-update",
     components: {
-      default:QuestionRegisterView,
+      default: QuestionRegisterView,
       navbar: AdminNavBar,
-    }
+    },
   },
   {
     path: "/subject/:id",
     name: "subject-update",
     components: {
-      default:SubjectRegisterView,
+      default: SubjectRegisterView,
       navbar: AdminNavBar,
-    }
+    },
   },
   {
     path: "/test/:id",
     name: "test-update",
     components: {
-      default:TestRegisterView,
+      default: TestRegisterView,
       navbar: AdminNavBar,
-    }
+    },
   },
   {
     path: "/test/answer/:id",
     name: "answer-test",
     components: {
-      default:AnswerTestView,
-      navbar: AdminNavBar,
-    }
+      default: AnswerTestView,
+      navbar: StudentNavBar,
+    },
   },
   {
     path: "/test/answer/question",
     name: "answer-question",
     components: {
-      default:AnswerQuestionView,
+      default: AnswerQuestionView,
       navbar: AdminNavBar,
-    }
+    },
   },
   {
     path: "/student-dashboard",
     name: "student-dashboard",
     components: {
-      default:StudentDashboardView,
-      navbar: StudentNavBarVue,
-    }
+      default: StudentDashboardView,
+      navbar: StudentNavBar,
+    },
   },
   {
     path: "/student-subjects",
     name: "student-subjects",
     components: {
-      default:StudentSubjectsView,
-      navbar: StudentNavBarVue,
-    }
+      default: StudentSubjectsView,
+      navbar: StudentNavBar,
+    },
   },
-  
+  {
+    path: "/subject/:id/tests",
+    name: "subject-tests",
+    components: {
+      default: SubjectTestsView,
+      navbar: StudentNavBar,
+    },
+  },
 ];
 
 const router = createRouter({

@@ -32,7 +32,7 @@ exports.getAllSubject = async () => {
   }
 };
 exports.getSubjectById = async (id) => {
-  const subject = await Subject.findById(id);
+  const subject = await Subject.findById(id).populate("tests");
 
   if (subject) {
     return subject;

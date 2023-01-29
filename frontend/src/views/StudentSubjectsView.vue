@@ -8,7 +8,7 @@
           Visualize informações referentes à disciplina de {{ subject.name }}.
         </div>
       </v-card-text>
-      <v-card-actions>
+      <v-card-actions @click="handleViewTest(subject._id)">
         <v-btn variant="text" class="text-sky-700"> Visualizar </v-btn>
       </v-card-actions>
     </v-card>
@@ -43,6 +43,9 @@ export default {
           console.log(error);
         });
     },
+    handleViewTest(id){
+      this.$router.push(`/subject/${id}/tests`);
+    }
   },
 };
 </script>
