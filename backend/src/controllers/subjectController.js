@@ -65,3 +65,4 @@ exports.deleteSubject = async (id) => {
     throw errors;
   }
 };
+

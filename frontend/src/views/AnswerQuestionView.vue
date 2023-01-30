@@ -109,7 +109,10 @@ export default {
       (this.selectedAlternativeId =
         this.$store.state.test.questions[
           this.$store.state.test.questionIndex
-        ].answer),
+        ].answer);
+        let index = this.$store.state.test.questionIndex;
+        console.log(this.$store.state.test.questions)
+        console.log(this.$store.state.test.questions[index])
         this.handleGetQuestion();
       this.message = {
         type: "",

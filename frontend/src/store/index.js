@@ -50,6 +50,9 @@ export default createStore({
     answerQuestion(state, payload) {
       state.test.questions[payload.questionIndex].answer = payload.answer;
     },
+    loadQuestions(state, payload) {
+      state.test.questions = payload;
+    }
   },
   actions: {
     setUser({ commit }, { name, id, email }) {
@@ -86,6 +89,9 @@ export default createStore({
       };
       commit("answerQuestion", payload);
     },
+    loadQuestions({ commit }, payload) {
+      commit("loadQuestions", payload);
+    }
   },
   modules: {},
 });

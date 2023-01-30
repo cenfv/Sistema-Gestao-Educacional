@@ -65,7 +65,8 @@ export default {
     },
     handleViewTest(id, name) {
       this.$store.dispatch("setQuestions", {
-        subjectName: name
+        subjectName: name,
+        subject: id,
       });
       this.$router.push(`/subject/${id}/tests`);
     },

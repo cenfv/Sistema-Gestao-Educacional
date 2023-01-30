@@ -81,3 +81,16 @@ exports.getAllSubmission = async () => {
     return submission;
   }
 };
+
+exports.getStudentSubmissionBySubjectAndTest = async (student, subject, test) => {
+  const submission = await Submission.findOne({
+    student,
+    subject,
+    test,
+  }).exec();
+
+  if (submission) {
+    return submission;
+  }
+  return null;
+}

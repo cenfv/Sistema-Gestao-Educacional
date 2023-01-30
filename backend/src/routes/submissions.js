@@ -46,6 +46,29 @@ router.get(
     }
   }
 );
+router.get(
+  "/student/:student/subject/:subject/test/:test",
+  jwt({ secret: process.env.SECRET, algorithms: ["HS256"] }),
+  async (req, res, next) => {
+    const { student, subject, test } = req.params;
+    try {
+      const submission =
+        await submissionController.getStudentSubmissionBySubjectAndTest(
+          student,
+          subject,
+          test
+        );
+      return res.status(200).json({
+        submission,
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(404).json({
+        msg: "Submission not found",
+      });
+    }
+  }
+);
 
 router.post(
   "/",
