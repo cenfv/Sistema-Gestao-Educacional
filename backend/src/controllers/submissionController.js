@@ -37,19 +37,31 @@ function gradeCalc(questions) {
 }
 exports.createSubmission = async (student, subject, test, questions) => {
   try {
+    const submission = await Submission.findOne({
+      student,
+      subject,
+      test,
+    }).exec();
+
+    if (submission) {
+      throw new Error("This user has already submitted this test");
+    }
     const testGrade = await gradeCalc(questions);
-    const submission = new Submission({
+    const newSubmission = new Submission({
       student,
       subject,
       test,
       questions,
       testGrade,
     });
-    const res = await submission.save();
+    const res = await newSubmission.save();
 
     return res;
   } catch (err) {
-    console.log(err)
+    console.log(err);
+    if (err.message === "This user has already submitted this test") {
+      throw err.message;
+    }
     const errors = handleErrors(err);
     throw errors;
   }
