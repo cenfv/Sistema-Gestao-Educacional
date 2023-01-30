@@ -178,7 +178,7 @@ const routes = [
     name: "answer-question",
     components: {
       default: AnswerQuestionView,
-      navbar: AdminNavBar,
+      navbar: StudentNavBar,
     },
   },
   {

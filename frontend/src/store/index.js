@@ -10,6 +10,7 @@ export default createStore({
     },
     test: {
       id: "",
+      subject: "",
       questionIndex: 0,
       questions: [
         {
@@ -37,6 +38,12 @@ export default createStore({
     },
     incrementQuestionIndex(state) {
       state.test.questionIndex++;
+    },
+    decrementQuestionIndex(state) {
+      state.test.questionIndex--;
+    },
+    answerQuestion(state, payload) {
+      state.test.questions[payload.questionIndex].answer = payload.answer;
     }
   },
   actions: {
@@ -56,7 +63,19 @@ export default createStore({
       commit("setTest", payload);
     },
     incrementQuestionIndex({ commit }) {
+      if (this.state.test.questionIndex === this.state.test.questions.length -1) return;
       commit("incrementQuestionIndex");
+    },
+    decrementQuestionIndex({ commit }) {
+      if (this.state.test.questionIndex === 0) return;
+      commit("decrementQuestionIndex");
+    },
+    answerQuestion({ commit }, {questionIndex, answer}) {
+      const payload = {
+        questionIndex,
+        answer
+      }
+      commit("answerQuestion", payload);
     }
   },
   modules: {},

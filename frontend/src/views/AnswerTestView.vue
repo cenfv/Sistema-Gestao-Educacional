@@ -77,6 +77,7 @@ export default {
       this.$store.dispatch("setQuestions", {
         questionIndex: 0,
         id: this.$route.params.id,
+        subject: this.$route.params.id,
         questions: this.formattedQuestions,
       });
       this.$router.push(`/test/answer/question`);
