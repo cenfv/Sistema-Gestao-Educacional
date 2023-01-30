@@ -3,7 +3,7 @@
     class="flex flex-col bg-white max-w-6xl mx-auto rounded-lg p-10 shadow-md space-y-2"
   >
     <h1 class="self-center text-3xl font-bold text-gray-900 sm:text-4xl">
-      Banco de dados
+      {{ this.subjectName  }}
     </h1>
     <div>
       <h1 class="text-3xl font-bold text-gray-900 sm:text-4xl">
@@ -40,6 +40,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      subjectName: this.$store.state.test.subjectName,
       test: {
         title: "",
         description: "",

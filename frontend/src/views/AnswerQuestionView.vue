@@ -62,12 +62,16 @@
       </div>
     </div>
 
-    <p
-      v-if="errors.message"
-      class="flex justify-end self-end text-red-600 font-semibold"
+    <div
+      class="flex justify-end mt-4 font-semibold"
+      v-if="message.type === 'error' || message.type === 'success'"
     >
-      {{ errors.message }}
-    </p>
+      <div
+        :class="message.type === 'error' ? 'text-red-400' : 'text-green-400'"
+      >
+        {{ message.text }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -76,7 +80,6 @@ import axios from "axios";
 export default {
   data() {
     return {
-      errors: {},
       selectedAlternativeId:
         this.$store.state.test.questions[this.$store.state.test.questionIndex]
           .answer,
@@ -90,7 +93,12 @@ export default {
             description: "",
           },
         ],
+       
       },
+      message: {
+          type: "",
+          text: "",
+        },
     };
   },
   mounted() {
@@ -103,7 +111,10 @@ export default {
           this.$store.state.test.questionIndex
         ].answer),
         this.handleGetQuestion();
-      this.errors = {};
+      this.message = {
+        type: "",
+        text: "",
+      };
     },
   },
   methods: {
@@ -154,10 +165,8 @@ export default {
         (question) => question.answer !== ""
       );
       if (!isAllAnswersFilled) {
-        this.errors = {
-          message:
-            "Você precisa responder todas as questões para finalizar o teste.",
-        };
+        this.message.type = "error";
+        this.message.text = "Você precisa responder todas as questões para finalizar o teste.";
         return;
       }
       axios
@@ -176,7 +185,22 @@ export default {
           }
         )
         .then((response) => {
-          console.log(response);
+          if (response.status === 201 && response.statusText === "Created") {
+            this.message.type = "success";
+            this.message.text = "Teste realizado com sucesso";
+            setTimeout(() => {
+              this.$router.push("/student-subjects");
+            }, 1500);
+          }
+        })
+        .catch((error) => {
+          if (error.response.data.validationError) {
+            this.message.text = error.response.data.validationError;
+            this.message.type = "error";
+          } else {
+            this.message.text = "Houve um erro ao realizar o teste";
+            this.message.type = "error";
+          }
         });
     },
   },

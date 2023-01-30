@@ -20,7 +20,7 @@
          Visualize informações referentes à disciplina de {{ subject.name }}.
        </div>
      </v-card-text>
-     <v-card-actions @click="handleViewTest(subject._id)">
+     <v-card-actions @click="handleViewTest(subject._id, subject.name)">
        <v-btn variant="text" class="text-sky-700"> Visualizar </v-btn>
      </v-card-actions>
    </v-card>
@@ -63,7 +63,10 @@ export default {
           console.log(error);
         });
     },
-    handleViewTest(id) {
+    handleViewTest(id, name) {
+      this.$store.dispatch("setQuestions", {
+        subjectName: name
+      });
       this.$router.push(`/subject/${id}/tests`);
     },
   },

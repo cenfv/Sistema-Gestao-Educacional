@@ -15,6 +15,7 @@ export default createStore({
     test: {
       id: "",
       subject: "",
+      subjectName: "",
       questionIndex: 0,
       questions: [
         {

@@ -6,7 +6,6 @@ import AboutView from "@/views/AboutView.vue";
 import ContactView from "@/views/ContactView.vue";
 import NewsView from "@/views/NewsView.vue";
 import LoginView from "@/views/LoginView.vue";
-import AdminDashboardView from "@/views/AdminDashboardView.vue";
 import QuestionView from "@/views/QuestionView.vue";
 import SubjectView from "@/views/SubjectView.vue";
 import TestView from "@/views/TestView.vue";
@@ -60,14 +59,7 @@ const routes = [
     name: "login",
     component: LoginView,
   },
-  {
-    path: "/dashboard",
-    name: "dashboard",
-    components: {
-      default: AdminDashboardView,
-      navbar: AdminNavBar,
-    },
-  },
+
   {
     path: "/question",
     name: "question",

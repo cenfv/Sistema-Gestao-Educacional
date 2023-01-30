@@ -17,12 +17,15 @@
       <input
         v-model="name"
         class="bg-white rounded-lg p-4 drop-shadow-lg focus:outline-none focus:ring"
+        :class="{ 'ring ring-red-300': v$.name.$error }"
         placeholder="Nome completo"
         name="name"
       />
+
       <input
         v-model="enrollNumber"
         class="bg-white rounded-lg p-4 drop-shadow-lg focus:outline-none focus:ring"
+        :class="{ 'ring ring-red-300': v$.enrollNumber.$error }"
         placeholder="Número de matrícula"
         name="enrollNumber"
       />
@@ -43,6 +46,7 @@
         type="email"
         v-model="email"
         class="bg-white rounded-lg p-4 drop-shadow-lg focus:outline-none focus:ring"
+        :class="{ 'ring ring-red-300': v$.email.$error }"
         placeholder="Endereço de e-mail"
         name="email"
       />
@@ -50,22 +54,43 @@
         type="password"
         v-model="password"
         class="bg-white rounded-lg p-4 drop-shadow-lg focus:outline-none focus:ring"
+        :class="{ 'ring ring-red-300': v$.password.$error }"
         placeholder="Senha"
         name="password"
       />
+      <div v-for="(error, index) of v$.$errors" :key="index">
+        <div class="text-red-400">{{ error.$message }}</div>
+      </div>
+
       <div class="flex justify-end">
         <button
-          class="mt-3 w-36 py-3 text-white font-medium rounded-lg text-center drop-shadow-lg 5 bg-blue-500 hover:bg-blue-700 "
+          class="mt-3 w-36 py-3 text-white font-medium rounded-lg text-center drop-shadow-lg 5 bg-blue-500 hover:bg-blue-700"
         >
           Salvar
         </button>
       </div>
     </form>
+    <div
+      class="flex justify-end mt-4 font-semibold"
+      v-if="message.type === 'error' || message.type === 'success'"
+    >
+      <div
+        :class="message.type === 'error' ? 'text-red-400' : 'text-green-400'"
+      >
+        {{ message.text }}
+      </div>
+    </div>
   </div>
 </template>
 <script>
 import axios from "axios";
+import useVuelidate from "@vuelidate/core";
+import { required, minLength, email, helpers } from "@vuelidate/validators";
+
 export default {
+  setup() {
+    return { v$: useVuelidate() };
+  },
   data() {
     return {
       name: "",
@@ -75,6 +100,42 @@ export default {
       subjects: [],
       selectedSubjects: [],
       mode: this.$route.params.id ? "edit" : "create",
+      message: {
+        type: "",
+        text: "",
+      },
+    };
+  },
+  validations() {
+    return {
+      name: {
+        required: helpers.withMessage("O Nome é obrigatório", required),
+        minLength: helpers.withMessage(
+          "O Nome deve possuir no mínmo 6 caracteres",
+          minLength(6)
+        ),
+      },
+      enrollNumber: {
+        required: helpers.withMessage(
+          "O Número de matrícula é obrigatório",
+          required
+        ),
+        minLength: helpers.withMessage(
+          "O Número de matrícula deve possuir no mínmo 6 caracteres",
+          minLength(6)
+        ),
+      },
+      email: {
+        required: helpers.withMessage("O e-mail é obrigatório", required),
+        email: helpers.withMessage("O e-mail deve ser válido", email),
+      },
+      password: {
+        required: helpers.withMessage("A Senha é obrigatória", required),
+        minLength: helpers.withMessage(
+          "A senha deve possuir no mínmo 6 caracteres",
+          minLength(6)
+        ),
+      },
     };
   },
   mounted() {
@@ -113,7 +174,13 @@ export default {
           console.log(error);
         });
     },
-    handleSaveStudent() {
+
+    async handleSaveStudent() {
+      const res = await this.v$.$validate();
+      if (!res) {
+        this.v$.$touch();
+        return;
+      }
       if (this.mode === "edit") {
         axios
           .put(
@@ -132,10 +199,22 @@ export default {
             }
           )
           .then((response) => {
-            console.log(response);
+            if (response.status === 200 && response.statusText === "OK") {
+              this.message.type = "success";
+              this.message.text = "Aluno atualizado com sucesso";
+              setTimeout(() => {
+                this.$router.push("/student");
+              }, 1500);
+            }
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.data.validationError) {
+              this.message.text = error.response.data.validationError;
+              this.message.type = "error";
+            } else {
+              this.message.text = "Houve um erro ao atualizar o estudante";
+              this.message.type = "error";
+            }
           });
       } else {
         axios
@@ -155,10 +234,22 @@ export default {
             }
           )
           .then((response) => {
-            console.log(response);
+            if (response.status === 201 && response.statusText === "Created") {
+              this.message.type = "success";
+              this.message.text = "Aluno cadastrado com sucesso";
+              setTimeout(() => {
+                this.$router.push("/student");
+              }, 1500);
+            }
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.data.validationError) {
+              this.message.text = error.response.data.validationError;
+              this.message.type = "error";
+            } else {
+              this.message.text = "Houve um erro ao cadastrar o estudante";
+              this.message.type = "error";
+            }
           });
       }
     },
