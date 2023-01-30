@@ -1,6 +1,10 @@
 import { createStore } from "vuex";
+import createPersistedState from "vuex-persistedstate"
 
 export default createStore({
+  plugins: [createPersistedState({
+    paths: ['user']
+  })],
   state: {
     user: {
       name: "",
@@ -44,7 +48,7 @@ export default createStore({
     },
     answerQuestion(state, payload) {
       state.test.questions[payload.questionIndex].answer = payload.answer;
-    }
+    },
   },
   actions: {
     setUser({ commit }, { name, id, email }) {
@@ -63,20 +67,24 @@ export default createStore({
       commit("setTest", payload);
     },
     incrementQuestionIndex({ commit }) {
-      if (this.state.test.questionIndex === this.state.test.questions.length -1) return;
+      if (
+        this.state.test.questionIndex ===
+        this.state.test.questions.length - 1
+      )
+        return;
       commit("incrementQuestionIndex");
     },
     decrementQuestionIndex({ commit }) {
       if (this.state.test.questionIndex === 0) return;
       commit("decrementQuestionIndex");
     },
-    answerQuestion({ commit }, {questionIndex, answer}) {
+    answerQuestion({ commit }, { questionIndex, answer }) {
       const payload = {
         questionIndex,
-        answer
-      }
+        answer,
+      };
       commit("answerQuestion", payload);
-    }
+    },
   },
   modules: {},
 });

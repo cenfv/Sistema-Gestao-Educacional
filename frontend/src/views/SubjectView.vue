@@ -13,9 +13,9 @@
             class="flex py-3 px-3 text-white text-sm font-normal rounded-lg text-center drop-shadow-lg 5 bg-slate-700 hover:bg-slate-900"
           >
             <div class="flex mr-2 items-baseline">
-              <v-icon icon="mdi-account-plus"></v-icon>
+              <v-icon icon="mdi-notebook"></v-icon>
             </div>
-            Cadastrar questão
+            Cadastrar matéria
           </router-link>
         </div>
       </div>
