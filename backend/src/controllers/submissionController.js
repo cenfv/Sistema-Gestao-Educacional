@@ -107,28 +107,31 @@ exports.getStudentStatistics = async (student) => {
     const subjects = await Subject.find();
     const res = await Submission.aggregate([
       {
-        $match: { student: mongoose.Types.ObjectId(student) }
+        $match: { student: mongoose.Types.ObjectId(student) },
       },
       {
         $group: {
           _id: "$subject",
           tests: { $sum: 1 },
-          averageGrade: { $avg: "$testGrade" }
-        }
+          averageGrade: { $avg: "$testGrade" },
+        },
       },
       {
         $project: {
           subject: "$_id",
           tests: 1,
           averageGrade: 1,
-          _id: 0
-        }
-      }
+          _id: 0,
+        },
+      },
     ]);
 
-    res.map(result => {
-      const subject = subjects.find(subject => subject._id.equals(result.subject));
-      if (subject && subject.tests) {
+    res.map((result) => {
+      const subject = subjects.find((subject) =>
+        subject._id.equals(result.subject)
+      );
+      if (subject) {
+        result.subjectName = subject.name;
         result.totalTests = subject.tests.length;
       }
     });
