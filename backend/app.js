@@ -13,6 +13,7 @@ var questionsRouter = require("./src/routes/questions");
 var testsRouter = require("./src/routes/tests");
 var subjectRouter = require("./src/routes/subjects");
 var submissionRouter = require("./src/routes/submissions");
+var authRouter = require("./src/routes/auth");
 var app = express();
 
 // view engine setup
@@ -35,6 +36,7 @@ app.use("/questions", questionsRouter);
 app.use("/tests", testsRouter);
 app.use("/subjects", subjectRouter);
 app.use("/submissions", submissionRouter);
+app.use("/auth", authRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

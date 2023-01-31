@@ -53,7 +53,7 @@ exports.updateSubject = async (id, name, students, tests) => {
     const studentsToRemove = subject.students.filter(
       (student) => !students.includes(student)
     );
-    console.log(studentsToRemove);
+
     const res = await subject.updateOne({
       name,
       students,
@@ -62,20 +62,27 @@ exports.updateSubject = async (id, name, students, tests) => {
 
     students.forEach(async (student) => {
       const findStudent = await Student.findOne({ _id: student });
-      console.log(findStudent.name);
-      const updateRes = await findStudent.updateOne({
-        $push: { subjects: subject._id },
-      });
-      console.log(updateRes);
+
+      try {
+        const updateRes = await findStudent.updateOne({
+          $push: { subjects: subject._id },
+        });
+        console.log(updateRes);
+      } catch (err) {
+        console.log(err);
+      }
     });
 
     studentsToRemove.forEach(async (student) => {
       const findStudent = await Student.findOne({ _id: student });
-      console.log(findStudent.name);
-      const updateRes = await findStudent.updateOne({
-        $pull: { subjects: subject._id },
-      });
-      console.log(updateRes);
+      try {
+        const updateRes = await findStudent.updateOne({
+          $pull: { subjects: subject._id },
+        });
+        console.log(updateRes);
+      } catch (err) {
+        console.log(err);
+      }
     });
     return res;
   } catch (err) {

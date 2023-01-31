@@ -102,16 +102,24 @@ exports.updateStudent = async (
       });
       subjects.forEach(async (subject) => {
         const findSubject = await Subject.findOne({ _id: subject });
-        const updateRes = await findSubject.updateOne({
-          $push: { students: id },
-        });
+        try {
+          const updateRes = await findSubject.updateOne({
+            $push: { students: id },
+          });
+        } catch (err) {
+          console.log(err);
+        }
       });
 
       subjectsToRemove.forEach(async (subject) => {
         const findSubject = await Subject.findOne({ _id: subject });
-        const updateRes = await findSubject.updateOne({
-          $pull: { students: id },
-        });
+        try {
+          const updateRes = await findSubject.updateOne({
+            $pull: { students: id },
+          });
+        } catch (err) {
+          console.log(err);
+        }
       });
       return res;
     } else {
@@ -121,19 +129,26 @@ exports.updateStudent = async (
         subjects,
         password: passwordHash,
       });
-
       subjects.forEach(async (subject) => {
         const findSubject = await Subject.findOne({ _id: subject });
-        const updateRes = await findSubject.updateOne({
-          $push: { students: id },
-        });
+        try {
+          const updateRes = await findSubject.updateOne({
+            $push: { students: id },
+          });
+        } catch (err) {
+          console.log(err);
+        }
       });
 
       subjectsToRemove.forEach(async (subject) => {
         const findSubject = await Subject.findOne({ _id: subject });
-        const updateRes = await findSubject.updateOne({
-          $pull: { students: id },
-        });
+        try {
+          const updateRes = await findSubject.updateOne({
+            $pull: { students: id },
+          });
+        } catch (err) {
+          console.log(err);
+        }
       });
       return res;
     }
@@ -158,7 +173,7 @@ exports.login = async function (email, password) {
   try {
     const student = await Student.findOne({ email: email });
     if (!student) {
-      return "Student not found";
+      throw "invalid credentials";
     }
     const checkPassword = await bcrypt.compare(password, student.password);
     if (checkPassword) {

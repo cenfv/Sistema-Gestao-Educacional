@@ -116,25 +116,6 @@ router.delete(
   }
 );
 
-router.post("/login", async function (req, res, next) {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res.status(400).send("Email and password required!");
-  }
-  var response = await studentController.login(email, password);
-  if (!response) {
-    return res.status(403).send("Invalid credentials!");
-  }
 
-  return res.send(response);
-});
-
-router.post(
-  "/data",
-  jwt({ secret: process.env.SECRET, algorithms: ["HS256"] }),
-  async function (req, res, next) {
-    return res.send(req.auth);
-  }
-);
 
 module.exports = router;

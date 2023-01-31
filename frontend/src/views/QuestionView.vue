@@ -39,7 +39,7 @@
           <tr v-for="question in filteredData" :key="question._id">
             <td>{{ question.title }}</td>
             <td>{{ question.createdAt }}</td>
-            <td class="flex space-x-4">
+            <td class="flex space-x-2">
               <div
                 @click="handleUpdateQuestion(question._id)"
                 class="flex items-center cursor-pointer hover:scale-125"

@@ -1,13 +1,9 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-  firstName: {
+  name: {
     type: String,
     required: [true, "Por favor, digite um nome"],
-  },
-  lastName: {
-    type: String,
-    required: [true, "Por favor, digite o último nome"],
   },
   email: {
     type: String,
@@ -26,7 +22,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: Number,
-    default: 0,
+    default: 1,
   },
 });
 

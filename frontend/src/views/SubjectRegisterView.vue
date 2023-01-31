@@ -50,7 +50,7 @@
       </div>
       <div class="flex justify-end">
         <button
-          class="mt-3 w-36 py-3 text-white font-medium rounded-lg text-center drop-shadow-lg 5 bg-blue-500 hover:bg-blue-700"
+          class="mt-3 w-36 py-3 text-white font-medium rounded-lg text-center drop-shadow-lg 5 bg-gray-700 hover:bg-gray-800"
         >
           Salvar
         </button>
@@ -221,7 +221,6 @@ export default {
               this.message.text = "Houve um erro ao cadastrar a matéria";
               this.message.type = "error";
             }
-        
           });
       }
     },
