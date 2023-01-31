@@ -2,7 +2,7 @@
 
 
 
-## Front-tend
+## Front-end
  ## Passos de instalação
 
  ### Navegue até a pasta do projeto
