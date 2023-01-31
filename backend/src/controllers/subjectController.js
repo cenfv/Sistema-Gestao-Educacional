@@ -1,4 +1,5 @@
 const Subject = require("../models/Subject");
+const Student = require("../models/Student");
 
 const handleErrors = (err) => {
   let errors = {};
@@ -19,6 +20,13 @@ exports.createSubject = async (name, students, tests) => {
     });
     const res = await subject.save();
 
+    students.forEach(async (student) => {
+      const findStudent = await Student.findOne({ _id: student });
+
+      const updateRes = await findStudent.updateOne({
+        $push: { subjects: res._id },
+      });
+    });
     return res;
   } catch (err) {
     const errors = handleErrors(err);
@@ -42,14 +50,36 @@ exports.getSubjectById = async (id) => {
 exports.updateSubject = async (id, name, students, tests) => {
   try {
     const subject = await Subject.findById(id);
+    const studentsToRemove = subject.students.filter(
+      (student) => !students.includes(student)
+    );
+    console.log(studentsToRemove);
     const res = await subject.updateOne({
       name,
       students,
       tests,
     });
 
+    students.forEach(async (student) => {
+      const findStudent = await Student.findOne({ _id: student });
+      console.log(findStudent.name);
+      const updateRes = await findStudent.updateOne({
+        $push: { subjects: subject._id },
+      });
+      console.log(updateRes);
+    });
+
+    studentsToRemove.forEach(async (student) => {
+      const findStudent = await Student.findOne({ _id: student });
+      console.log(findStudent.name);
+      const updateRes = await findStudent.updateOne({
+        $pull: { subjects: subject._id },
+      });
+      console.log(updateRes);
+    });
     return res;
   } catch (err) {
+    console.log(err);
     const errors = handleErrors(err);
     throw errors;
   }
@@ -65,4 +95,3 @@ exports.deleteSubject = async (id) => {
     throw errors;
   }
 };
-

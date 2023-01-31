@@ -1,4 +1,5 @@
 const Student = require("../models/Student");
+const Subject = require("../models/Subject");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -15,7 +16,13 @@ const handleErrors = (err) => {
   return errors;
 };
 
-exports.createStudent = async (name, enrollmentNumber,subjects, email, password) => {
+exports.createStudent = async (
+  name,
+  enrollmentNumber,
+  subjects,
+  email,
+  password
+) => {
   try {
     let passwordHash = "";
     if (password.length >= 6) {
@@ -31,6 +38,15 @@ exports.createStudent = async (name, enrollmentNumber,subjects, email, password)
       password: passwordHash,
     });
     const res = await student.save();
+
+    subjects.forEach(async (subject) => {
+      const findSubject = await Subject.findOne({ _id: subject });
+
+      const updateRes = await findSubject.updateOne({
+        $push: { students: res._id },
+      });
+    });
+
     return res;
   } catch (err) {
     const errors = handleErrors(err);
@@ -75,11 +91,27 @@ exports.updateStudent = async (
       passwordHash = await bcrypt.hash(password, salt);
     }
     const student = await Student.findById(id);
+    const subjectsToRemove = student.subjects.filter(
+      (subject) => !subjects.includes(subject)
+    );
     if (!password) {
       const res = await student.updateOne({
         name,
         enrollmentNumber,
         subjects,
+      });
+      subjects.forEach(async (subject) => {
+        const findSubject = await Subject.findOne({ _id: subject });
+        const updateRes = await findSubject.updateOne({
+          $push: { students: id },
+        });
+      });
+
+      subjectsToRemove.forEach(async (subject) => {
+        const findSubject = await Subject.findOne({ _id: subject });
+        const updateRes = await findSubject.updateOne({
+          $pull: { students: id },
+        });
       });
       return res;
     } else {
@@ -88,6 +120,20 @@ exports.updateStudent = async (
         enrollmentNumber,
         subjects,
         password: passwordHash,
+      });
+
+      subjects.forEach(async (subject) => {
+        const findSubject = await Subject.findOne({ _id: subject });
+        const updateRes = await findSubject.updateOne({
+          $push: { students: id },
+        });
+      });
+
+      subjectsToRemove.forEach(async (subject) => {
+        const findSubject = await Subject.findOne({ _id: subject });
+        const updateRes = await findSubject.updateOne({
+          $pull: { students: id },
+        });
       });
       return res;
     }
