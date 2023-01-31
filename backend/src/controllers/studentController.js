@@ -85,6 +85,7 @@ exports.updateStudent = async (
   password
 ) => {
   try {
+    console.log(id,name,enrollmentNumber,subjects,email,password)
     let passwordHash = "";
     if (password && password.length >= 6) {
       const salt = await bcrypt.genSalt(10);

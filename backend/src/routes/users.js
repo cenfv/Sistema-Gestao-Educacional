@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
+const validate = require("../controllers/helper/validate");
 var { expressjwt: jwt } = require("express-jwt");
 require("dotenv").config();
 
@@ -24,7 +25,6 @@ router.post("/", async (req, res, next) => {
   try {
     const user = await userController.createUser(
       name,
-
       email,
       password
     );
@@ -40,6 +40,7 @@ router.post("/", async (req, res, next) => {
 router.get(
   "/:id",
   jwt({ secret: process.env.SECRET, algorithms: ["HS256"] }),
+  validate.checkAdminPrivilege,
   async (req, res, next) => {
     const targetId = req.params.id;
     try {
@@ -64,6 +65,7 @@ router.get(
 router.put(
   "/:id",
   jwt({ secret: process.env.SECRET, algorithms: ["HS256"] }),
+  validate.checkAdminPrivilege,
   async (req, res, next) => {
     const targetId = req.params.id;
     if (targetId != req.id) {
@@ -94,6 +96,7 @@ router.put(
 router.delete(
   "/:id",
   jwt({ secret: process.env.SECRET, algorithms: ["HS256"] }),
+  validate.checkAdminPrivilege,
   async (req, res, next) => {
     const targetId = req.params.id;
     if (targetId != req.id) {

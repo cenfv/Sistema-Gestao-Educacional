@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const studentController = require("../controllers/studentController");
+const validate = require("../controllers/helper/validate");
 var { expressjwt: jwt } = require("express-jwt");
 require("dotenv").config();
 
@@ -42,47 +43,21 @@ router.get(
   }
 );
 
-router.post("/", async (req, res, next) => {
-  const { name, enrollmentNumber, subjects, email, password } = req.body;
-  try {
-    const student = await studentController.createStudent(
-      name,
-      enrollmentNumber,
-      subjects,
-      email,
-      password
-    );
-    return res.status(201).json({
-      student,
-    });
-  } catch (err) {
-    return res.status(400).json({
-      validationError: err,
-    });
-  }
-});
-
-router.put(
-  "/:id",
+router.post(
+  "/",
   jwt({ secret: process.env.SECRET, algorithms: ["HS256"] }),
+  validate.checkAdminPrivilege,
   async (req, res, next) => {
-    const targetId = req.params.id;
-    if (targetId != req.auth.id) {
-      return res.status(404).json({
-        msg: "Student not authenticated",
-      });
-    }
+    const { name, enrollmentNumber, subjects, email, password } = req.body;
     try {
-      const { name, enrollmentNumber, subjects, email, password } = req.body;
-      const student = await studentController.updateStudent(
-        req.auth.id,
+      const student = await studentController.createStudent(
         name,
         enrollmentNumber,
         subjects,
         email,
         password
       );
-      return res.status(200).json({
+      return res.status(201).json({
         student,
       });
     } catch (err) {
@@ -93,16 +68,39 @@ router.put(
   }
 );
 
+router.put(
+  "/:id",
+  jwt({ secret: process.env.SECRET, algorithms: ["HS256"] }),
+  validate.checkAdminPrivilege,
+  async (req, res, next) => {
+    const targetId = req.params.id;
+    try {
+      const { name, enrollmentNumber, subjects, email, password } = req.body;
+      const student = await studentController.updateStudent(
+        targetId,
+        name,
+        enrollmentNumber,
+        subjects,
+        email,
+        password
+      );
+      return res.status(200).json({
+        student,
+      });
+    } catch (err) {
+      console.log(err)
+      return res.status(400).json({
+        validationError: err,
+      });
+    }
+  }
+);
+
 router.delete(
   "/:id",
   jwt({ secret: process.env.SECRET, algorithms: ["HS256"] }),
+  validate.checkAdminPrivilege,
   async (req, res, next) => {
-    const targetId = req.params.id;
-    if (targetId != req.auth.id) {
-      return res.status(404).json({
-        msg: "Student not authenticated",
-      });
-    }
     try {
       const student = await studentController.deleteStudent(req.params.id);
       return res.status(200).json({
@@ -115,7 +113,5 @@ router.delete(
     }
   }
 );
-
-
 
 module.exports = router;

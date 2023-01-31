@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const questionController = require("../controllers/questionController");
-
+const validate = require("../controllers/helper/validate");
 var { expressjwt: jwt } = require("express-jwt");
 require("dotenv").config();
 
@@ -50,6 +50,7 @@ router.get(
 router.post(
   "/",
   jwt({ secret: process.env.SECRET, algorithms: ["HS256"] }),
+  validate.checkAdminPrivilege,
   async (req, res, next) => {
     const { title, description, alternatives, correctAlternative } = req.body;
     try {
@@ -73,6 +74,7 @@ router.post(
 router.put(
   "/:id",
   jwt({ secret: process.env.SECRET, algorithms: ["HS256"] }),
+  validate.checkAdminPrivilege,
   async (req, res, next) => {
     try {
       const { title, description, alternatives, correctAlternative } = req.body;
@@ -97,6 +99,7 @@ router.put(
 router.delete(
   "/:id",
   jwt({ secret: process.env.SECRET, algorithms: ["HS256"] }),
+  validate.checkAdminPrivilege,
   async (req, res, next) => {
     try {
       const question = await questionController.deleteQuestion(req.params.id);
