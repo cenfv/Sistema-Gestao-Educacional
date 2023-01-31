@@ -30,6 +30,12 @@
           &nbsp;Prova já realizada
         </p>
       </div>
+      <div v-if="mode === 'review'" class="flex items-center">
+        <p class="text-lg font-semibold">Nota:</p>
+        <p class="ml-2 text-lg text-green-600 font-bold">
+          {{ Number(this.grade).toFixed(2) }}
+        </p>
+      </div>
     </div>
     <v-btn
       v-if="this.mode === 'create'"
@@ -55,8 +61,9 @@ export default {
     return {
       subjectName: this.$store.state.test.subjectName,
       subject: this.$store.state.test.subject,
+      grade: "",
       mode: "create",
-      questions:{},
+      questions: {},
       test: {
         title: "",
         description: "",
@@ -105,6 +112,7 @@ export default {
           if (response.data.submission) {
             this.mode = "review";
             this.questions = response.data.submission.questions;
+            this.grade = response.data.submission.testGrade;
           }
         })
         .catch((error) => {

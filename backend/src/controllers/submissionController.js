@@ -1,5 +1,8 @@
 const Submission = require("../models/Submission");
 const Question = require("../models/Question");
+const mongoose = require("mongoose");
+const Student = require("../models/Student");
+const Subject = require("../models/Subject");
 
 const handleErrors = (err) => {
   let errors = {};
@@ -82,7 +85,11 @@ exports.getAllSubmission = async () => {
   }
 };
 
-exports.getStudentSubmissionBySubjectAndTest = async (student, subject, test) => {
+exports.getStudentSubmissionBySubjectAndTest = async (
+  student,
+  subject,
+  test
+) => {
   const submission = await Submission.findOne({
     student,
     subject,
@@ -93,4 +100,41 @@ exports.getStudentSubmissionBySubjectAndTest = async (student, subject, test) =>
     return submission;
   }
   return null;
-}
+};
+
+exports.getStudentStatistics = async (student) => {
+  try {
+    const subjects = await Subject.find();
+    const res = await Submission.aggregate([
+      {
+        $match: { student: mongoose.Types.ObjectId(student) }
+      },
+      {
+        $group: {
+          _id: "$subject",
+          tests: { $sum: 1 },
+          averageGrade: { $avg: "$testGrade" }
+        }
+      },
+      {
+        $project: {
+          subject: "$_id",
+          tests: 1,
+          averageGrade: 1,
+          _id: 0
+        }
+      }
+    ]);
+
+    res.map(result => {
+      const subject = subjects.find(subject => subject._id.equals(result.subject));
+      if (subject && subject.tests) {
+        result.totalTests = subject.tests.length;
+      }
+    });
+
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};

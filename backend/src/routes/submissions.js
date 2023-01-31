@@ -69,6 +69,27 @@ router.get(
     }
   }
 );
+router.get(
+  "/student/:id/statistics",
+  jwt({ secret: process.env.SECRET, algorithms: ["HS256"] }),
+  async (req, res, next) => {
+    const { id } = req.params;
+    try {
+      const statistics =
+        await submissionController.getStudentStatistics(
+         id
+        );
+      return res.status(200).json({
+        statistics,
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(404).json({
+        msg: "Statistics not found",
+      });
+    }
+  }
+);
 
 router.post(
   "/",
