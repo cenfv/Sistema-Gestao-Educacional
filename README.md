@@ -1,4 +1,4 @@
-## Sistema de Gestão Educacional - Teste para o estágio na Vidya
+## Sistema de Gestão Educacional 
 
 
 
@@ -24,8 +24,7 @@
 
 ## Sobre o sistema
 
-Este sistema foi desenvolvido durante o teste de estágio na empresa Vidya.<br>
-Ele inclui funcionalidades para o registro de Alunos, Matérias, Provas e Questões.<br>
+O sistema inclui funcionalidades para o registro de Alunos, Matérias, Provas e Questões.<br>
 
 Ao entrar, o estudante tem acesso a um painel de controle, onde pode ter acesso as provas atribuídas, podendo responde-las e revisá-las, bem como visualizar informações de desempenho, incluindo matérias inscritas, notas e testes.
 
